@@ -21,5 +21,6 @@ Route::get('/hash/{text}', function() {
 });
 
 Route::middleware('auth')->group(function() {
-    Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
+    Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
+    Route::resource('/equipment', \App\Http\Controllers\EquipmentController::class);
 });

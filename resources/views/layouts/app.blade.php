@@ -7,31 +7,48 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('') }}vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('') }}css/app.css">
-    <link rel="stylesheet" href="{{ asset('') }}css/style.css">
-    
+    <base href="{{ asset('') }}"/>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+
+    <!-- Page CSS -->
+    @yield('page-css')
+
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
-        @include('layouts.sidebars')
+        @auth
+            @include('layouts.sidebars')
+            <div id="main">
+                <div class="page-wrapper">
+                    <!-- Page title -->
+                    @include('layouts.page-title')
 
-        <div id="main">
+                    <!-- Page content -->
+                    @yield('content')
+                </div>
+            </div>
+        @else
             @yield('content')
-        </div>
+        @endauth
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('') }}vendor/js/jquery-3.6.1.min.js"></script>
-    <script src="{{ asset('') }}vendor/js/popper.min.js"></script>
-    <script src="{{ asset('') }}vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="{{ asset('') }}js/main.js"></script>
-    <script src="{{ asset('') }}js/script.js"></script>
+    <script src="vendor/js/jquery-3.6.1.min.js"></script>
+    <script src="vendor/js/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Page JS -->
+    @yield('page-js')
+
+    <script src="js/main.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
 </html>

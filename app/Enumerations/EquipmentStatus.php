@@ -9,6 +9,7 @@ enum EquipmentStatus: int
     case AVAILABLE = 1;
     case ALLOCATED = 2;
     case REPAIRING = 3;
+    case DAMAGED = 4;
 
     public static function values(): array
     {
@@ -22,6 +23,7 @@ enum EquipmentStatus: int
             EquipmentStatus::AVAILABLE => 'Available',
             EquipmentStatus::ALLOCATED => 'Allocated',
             EquipmentStatus::REPAIRING => 'Repairing',
+            EquipmentStatus::DAMAGED => 'Damaged',
         };
     }
 
@@ -30,8 +32,9 @@ enum EquipmentStatus: int
         return match($this) 
         {
             EquipmentStatus::AVAILABLE => 'success',
-            EquipmentStatus::ALLOCATED => 'warning',
-            EquipmentStatus::REPAIRING => 'danger',
+            EquipmentStatus::ALLOCATED => 'primary',
+            EquipmentStatus::REPAIRING => 'warning',
+            EquipmentStatus::DAMAGED => 'danger',
         };
     }
 }

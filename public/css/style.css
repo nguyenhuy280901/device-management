@@ -1,3 +1,8 @@
-.sidebars{
-    
+.stats-icon.orange {
+    background-color: #e08816;
+}
+
+label.error {
+    color: #ff0000;
+    font-weight: 400;
 }

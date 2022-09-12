@@ -6,7 +6,7 @@ use App\Repositories\RepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class Service implements ServiceInterface
+abstract class Service implements ServiceInterface
 {
     private $repository;
 
@@ -21,7 +21,7 @@ class Service implements ServiceInterface
      * 
      * @return Collection
      */
-    public function getAll(): Collection
+    public function getAll()
     {
         return $this->repository->all();
     }
@@ -29,6 +29,7 @@ class Service implements ServiceInterface
     /**
      * 
      * Create new model
+     * 
      * @param $attributes
      * @return Model
      */

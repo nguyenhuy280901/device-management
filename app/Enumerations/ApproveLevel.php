@@ -11,4 +11,13 @@ enum ApproveLevel: int
     {
         return array_column(self::cases(), 'value');
     }
+
+    public function description(): string
+    {
+        return match($this) 
+        {
+            ApproveLevel::MANAGER => 'Manager',
+            ApproveLevel::DIRECTOR => 'Director'
+        };
+    }
 }

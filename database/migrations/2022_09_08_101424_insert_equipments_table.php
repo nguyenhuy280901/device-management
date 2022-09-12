@@ -20,7 +20,7 @@ return new class extends Migration
             [
                 'name' => 'Laptop Dell 1',
                 'description' => '',
-                'image' => 'laptop-dell-1.png',
+                'image' => 'laptop-dell-1.jpg',
                 'status' => EquipmentStatus::AVAILABLE,
                 'approve_level' => ApproveLevel::MANAGER,
                 'category_id' => 1
@@ -28,7 +28,7 @@ return new class extends Migration
             [
                 'name' => 'Monitor ViewSonic 1',
                 'description' => '',
-                'image' => 'monitor-viewsonic-1.png',
+                'image' => 'monitor-viewsonic-1.jpg',
                 'status' => EquipmentStatus::ALLOCATED,
                 'approve_level' => ApproveLevel::MANAGER,
                 'category_id' => 1

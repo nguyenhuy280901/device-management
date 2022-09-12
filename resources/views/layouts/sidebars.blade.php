@@ -14,62 +14,72 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <li class="sidebar-title">Menu</li>
-
-                <li class="sidebar-item  ">
-                    <a href="index.html" class='sidebar-link'>
+                <li class="sidebar-item active">
+                    <a href="{{ route('dashboard.index') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item active has-sub">
+                <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
-                        <span>Components</span>
+                        <span>Equipment</span>
                     </a>
-                    <ul class="submenu active">
+                    <ul class="submenu">
                         <li class="submenu-item ">
-                            <a href="component-alert.html">Alert</a>
+                            <a href="component-alert.html">List</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="component-badge.html">Badge</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-breadcrumb.html">Breadcrumb</a>
+                            <a href="component-badge.html">Add</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="sidebar-item  has-sub">
+                <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-person-badge-fill"></i>
-                        <span>Authentication</span>
+                        <span>Employee</span>
                     </a>
-                    <ul class="submenu ">
+                    <ul class="submenu">
                         <li class="submenu-item ">
-                            <a href="auth-login.html">Login</a>
+                            <a href="auth-login.html">List</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="auth-register.html">Register</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="auth-forgot-password.html">Forgot Password</a>
+                            <a href="auth-register.html">Add</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="sidebar-item  has-sub">
+                <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-x-octagon-fill"></i>
-                        <span>Errors</span>
+                        <span>Booking</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="error-403.html">403</a>
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="error-403.html">List</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="error-404.html">404</a>
+                            <a href="error-404.html">Add</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-x-octagon-fill"></i>
+                        <span>Account</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="error-403.html">Account Information</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="error-403.html">Change Password</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="error-404.html">Sign Out</a>
                         </li>
                     </ul>
                 </li>

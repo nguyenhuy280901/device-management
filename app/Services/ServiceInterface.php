@@ -13,7 +13,7 @@ interface ServiceInterface
      * 
      * @return Collection
      */
-    public function getAll():Collection;
+    public function getAll();
 
     /**
      * 

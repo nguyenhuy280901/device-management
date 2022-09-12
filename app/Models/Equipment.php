@@ -13,6 +13,9 @@ class Equipment extends Model
 
     protected $table = "equipments";
     public $timestamps = false;
+    protected $fillable = [
+        'name', 'image', 'description', 'status', 'approve_level', 'category_id'
+    ];
 
     /**
      * Get the equipment's status
@@ -26,5 +29,13 @@ class Equipment extends Model
                 return EquipmentStatus::from($value);
             },
         );
+    }
+
+    /**
+     * Get the category that the equipment belongs to.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }
