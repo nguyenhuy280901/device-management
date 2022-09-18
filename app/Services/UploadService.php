@@ -2,26 +2,40 @@
 
 namespace App\Services;
 
+use Symfony\Component\HttpFoundation\File\File;
+
 class UploadService
 {
     /**
-     * 
-     * @param string $jsonData
+     * Store media and return path
+     *
+     * @param File|null $uploadedFile
+     * @param string $file_name
      * @param string $destination
-     * @return string
+     * @return \Symfony\Component\HttpFoundation\File\File
      */
-    public function storeBase64(string $jsonData, string $destination): string
+    public function store($destination, $file)
     {
-        $fileInfo = json_decode($jsonData);
+        return $file->move($destination, $file->getFilename());
+    }
 
-        $basename = pathinfo($fileInfo["name"], PATHINFO_BASENAME);
-        $extension = pathinfo($fileInfo["name"], PATHINFO_EXTENSION);
-        $fileName = $basename . $fileInfo["id"] . "." . $extension;
+    /**
+     * Decode base 64 image
+     * @param string $image_json_data
+     * @return File
+     */
+    public function decodeImageBase64(string $image_json_data) {
+        $imageData = json_decode($image_json_data);
 
-        $fileData = base64_decode($fileInfo["data"]);
+        $fileExtension = pathinfo($imageData->name, PATHINFO_EXTENSION);
+        $fileName = pathinfo($imageData->name, PATHINFO_FILENAME);
         
-        file_put_contents($destination . "/" . $fileName, $fileData);
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData->data));
 
-        return $fileName;
+        // Save it to temporary dir first
+        $tmpFilePath = sys_get_temp_dir() . '/' . $fileName . $imageData->id . '.' . $fileExtension;
+        file_put_contents($tmpFilePath, $data);
+        
+        return new File($tmpFilePath);
     }
 }

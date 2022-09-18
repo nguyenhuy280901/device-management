@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('title') Dashboard @endsection
+
+@section('page-css')
+    {{-- <link rel="stylesheet" href="vendor/apexcharts/apexcharts.css"> --}}
+@endsection
+@section('page-js')
+    <script src="vendor/js/apexcharts.js"></script>
+    <script src="js/charts.js"></script>
+@endsection
+
 @section('content')
     <div class="page-content">
         <div class="row">
@@ -73,6 +82,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-12 chart">
+                <div id="chart"></div>
             </div>
         </div>
     </div>

@@ -2,8 +2,6 @@
 
 namespace App\Enumerations;
 
-use App\Enumerations\EquipmentStatus as EnumerationsEquipmentStatus;
-
 enum EquipmentStatus: int
 {
     case AVAILABLE = 1;

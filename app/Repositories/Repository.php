@@ -35,6 +35,28 @@ class Repository implements RepositoryInterface
     }
 
     /**
+     * Get list models with eager loading
+     *
+     * @param  array|string  $relations
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function with($relations): Collection
+    {
+        return $this->model->with($relations)->get();
+    }
+
+    /**
+     * Get list models by conditions
+     *
+     * @param  array  $conditions
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function where($conditions): Collection
+    {
+        return $this->model->where($conditions)->get();
+    }
+
+    /**
      * Store new model in database
      * 
      * @param $attributes
@@ -43,5 +65,42 @@ class Repository implements RepositoryInterface
     public function create($attributes): Model
     {
         return $this->model->create($attributes);
+    }
+
+    /**
+     * 
+     * Find a model by id
+     * 
+     * @param string $id
+     * @return Model
+     */
+    public function find($id): Model
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    /**
+     * 
+     * Update a model in database
+     * 
+     * @param string $id
+     * @param array $attributes
+     * @return bool
+     */
+    public function update($id, $attributes): bool
+    {
+        return $this->model->find($id)->update($attributes);
+    }
+
+    /**
+     * 
+     * Remove the specified model from storage.
+     * 
+     * @param string $id
+     * @return bool|null
+     */
+    public function delete($id): bool|null
+    {
+        return $this->model->find($id)->delete();
     }
 }

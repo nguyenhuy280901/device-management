@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enumerations\ApproveLevel;
 use App\Enumerations\EquipmentStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,20 @@ class Equipment extends Model
         return Attribute::make(
             get: function($value) {
                 return EquipmentStatus::from($value);
+            },
+        );
+    }
+
+    /**
+     * Get the equipment's approve level
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function ApproveLevel(): Attribute
+    {
+        return Attribute::make(
+            get: function($value) {
+                return ApproveLevel::from($value);
             },
         );
     }

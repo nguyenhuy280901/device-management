@@ -26,7 +26,20 @@
     <div id="app">
         @auth
             @include('layouts.sidebars')
+            
             <div id="main">
+                @if (Session::has('message'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('message') }}
+                    </div>
+                @endif
+
+                @error('message')
+                    <div class="alert alert-danger" role="alert">
+                        {{ implode(', ', $errors->all()) }}
+                    </div>
+                @enderror
+                
                 <div class="page-wrapper">
                     <!-- Page title -->
                     @include('layouts.page-title')

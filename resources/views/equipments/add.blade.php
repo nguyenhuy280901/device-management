@@ -4,6 +4,7 @@
 @section('page-css')
     <link rel="stylesheet" href="vendor/filepond/css/filepond.min.css">
     <link rel="stylesheet" href="vendor/filepond/css/filepond-plugin-image-preview.min.css">
+    <link rel="stylesheet" href="vendor/choices.js/choices.min.css">
 @endsection
 @section('page-js')
     <script src="vendor/filepond/js/filepond.min.js"></script>
@@ -19,11 +20,13 @@
 
         // Select the file input and use 
         // create() to turn it into a pond
-        FilePond.create(document.querySelector('.filepond',  {
-            acceptedFileTypes: ['image/png,image/jpg,image/jpeg'],
-        }));
+        FilePond.create(document.querySelector('.filepond'),  {
+            acceptedFileTypes: ['image/png','image/jpg','image/jpeg'],
+        });
     </script>
+    <script src="vendor/choices.js/choices.min.js"></script>
     <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="js/validate.js"></script>
 @endsection
 @section('content')
     <section id="multiple-column-form">
@@ -32,7 +35,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-add-equipment" method="POST" action="{{ route('equipment.store') }}">
+                            <form class="form form-equipment" method="POST" action="{{ route('equipment.store') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 col-12">
@@ -44,10 +47,10 @@
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="device-status">Status</label>
-                                            <select name="status" id="device-status" value="{{ old('status') }}" class="form-select">
+                                            <select name="status" id="device-status" class="form-select choices">
                                                 <option value="">Choose device's status</option>
                                                 @foreach ($statuses as $status)
-                                                    <option value="{{ $status->value }}">
+                                                    <option value="{{ $status->value }}" @selected(old('status') == $status->value)>
                                                         {{ $status->description() }}
                                                     </option>
                                                 @endforeach
@@ -57,10 +60,10 @@
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="category">Category</label>
-                                            <select name="category_id" id="category" value="{{ old('category_id') }}" class="form-select">
+                                            <select name="category_id" id="category" class="form-select choices">
                                                 <option value="">Choose category</option>
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}">
+                                                    <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
                                                         {{ $category->name }}
                                                     </option>
                                                 @endforeach
@@ -70,10 +73,10 @@
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="approve-level">Approve Level</label>
-                                            <select name="approve_level" id="approve-level" value="{{ old('approve_level') }}" class="form-select">
+                                            <select name="approve_level" id="approve-level" class="form-select choices">
                                                 <option value="">Choose approve level</option>
                                                 @foreach ($approveLevels as $level)
-                                                    <option value="{{ $level->value }}">
+                                                    <option value="{{ $level->value }}" @selected(old('approve_level') == $level->value)>
                                                         {{ $level->description() }}
                                                     </option>
                                                 @endforeach
@@ -85,7 +88,7 @@
                                             <label for="description">
                                                 Description
                                             </label>
-                                            <textarea class="form-control" id="description" placeholder="Device description" name="description" value="{{ old('description') }}" rows="6"></textarea>
+                                            <textarea class="form-control" id="description" placeholder="Device description" name="description" rows="6">{{ old('description') }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">

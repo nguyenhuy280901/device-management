@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::table('employees', function(Blueprint $table) {
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 

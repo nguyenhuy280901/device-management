@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
 
-Route::get('/hash/{text}', function() {
-    echo Hash::make(request()->text);
-});
-
 Route::middleware('auth')->group(function() {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
+    Route::resource('/category', \App\Http\Controllers\CategoryController::class);
     Route::resource('/equipment', \App\Http\Controllers\EquipmentController::class);
+    Route::resource('/employee', \App\Http\Controllers\EmployeeController::class);
+    Route::resource('/booking', \App\Http\Controllers\BookingController::class);
+    Route::resource('/department', \App\Http\Controllers\DepartmentController::class);
 });

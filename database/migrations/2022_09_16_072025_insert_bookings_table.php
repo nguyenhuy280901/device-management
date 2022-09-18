@@ -1,5 +1,6 @@
 <?php
 
+use App\Enumerations\BookingStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -14,8 +15,20 @@ return new class extends Migration
      */
     public function up()
     {
-        $roles = [['name' => 'Admin']];
-        DB::table('roles')->insert($roles);
+        $bookings = [
+            [
+                'employee_id' => 1,
+                'equipment_id' => 1,
+                'status' => BookingStatus::PENDING
+            ],
+            [
+                'employee_id' => 1,
+                'equipment_id' => 2,
+                'status' => BookingStatus::APPROVED
+            ],
+        ];
+
+        DB::table('bookings')->insert($bookings);
     }
 
     /**

@@ -4,8 +4,10 @@ namespace App\Http\Requests;
 
 use App\Enumerations\ApproveLevel;
 use App\Enumerations\EquipmentStatus;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class EquipmentRequest extends FormRequest
 {
@@ -55,5 +57,10 @@ class EquipmentRequest extends FormRequest
             'description.max' => 'The device\'s description is too long. Please truncates your device\'s description!',
             'image_json.required' => 'Please choose image of device',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        return new ValidationException($validator);
     }
 }

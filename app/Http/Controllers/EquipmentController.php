@@ -6,10 +6,10 @@ use App\Enumerations\ApproveLevel;
 use App\Enumerations\EquipmentStatus;
 use App\Services\EquipmentService;
 use App\Services\CategoryService;
-use Illuminate\Http\Request;
 use App\Http\Requests\EquipmentRequest;
 use App\Services\UploadService;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
 class EquipmentController extends Controller
@@ -22,7 +22,7 @@ class EquipmentController extends Controller
 
     /**
      * 
-     * @var EquipmentService
+     * @var CategoryService
      */
     private $categoryService;
 
@@ -56,7 +56,7 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        $equipments = $this->equipmentService->getAll();
+        $equipments = $this->equipmentService->getWithRelations('category');
         
         return view('equipments.index', [
             'equipments' => $equipments,
@@ -91,13 +91,22 @@ class EquipmentController extends Controller
     {
         try
         {
-            $validatedData = $request->validated();
-            $image = $this->uploadService->storeBase64(request('image_json'), asset("images/equipments"));
-            $this->equipmentService->create(array_merge($validatedData, ["image" => $image]));
+            $validated = $request->validated();
+
+            $file = $this->uploadService->decodeImageBase64(request('image_json'));
+            $this->equipmentService->create(array_merge($validated, ["image" => $file->getFilename()]));
+
+            $this->uploadService->store("images/equipments", $file);
+
+            return to_route('equipment.index')->with([
+                'message' => 'Create new device successfully'
+            ]);
         }
-        catch(ValidationException|Exception $ex)
+        catch(ValidationException $ex)
         {
-            dd($ex);
+            return back()->withErrors([
+                'message' => $ex->getMessage()
+            ])->withInput();
         }
     }
 
@@ -109,7 +118,18 @@ class EquipmentController extends Controller
      */
     public function show($id)
     {
-        //
+        try
+        {
+            $equipment = $this->equipmentService->find($id);
+        }
+        catch (ModelNotFoundException $ex)
+        {
+            return to_route('equipment.index')->withErrors(['message' => 'Not found device!']);
+        }
+
+        return view('equipments.detail', [
+            'equipment' => $equipment
+        ]);
     }
 
     /**
@@ -120,7 +140,25 @@ class EquipmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        try
+        {
+            $equipment = $this->equipmentService->find($id);
+        }
+        catch (ModelNotFoundException $ex)
+        {
+            return to_route('equipment.index')->withErrors(['message' => 'Not found device!']);
+        }
+        
+        $statuses = EquipmentStatus::cases();
+        $approveLevels = ApproveLevel::cases();
+        $categories = $this->categoryService->getAll();
+
+        return view('equipments.edit', [
+            'equipment' => $equipment,
+            'statuses' => $statuses,
+            'approveLevels' => $approveLevels,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -132,7 +170,34 @@ class EquipmentController extends Controller
      */
     public function update(EquipmentRequest $request, $id)
     {
-        //
+        try
+        {
+            $validated = $request->validated();
+
+            // Only save upload image when the user change the image of device
+            if(request('image_change') == 1)
+            {
+                $file = $this->uploadService->decodeImageBase64(request('image_json'));
+                $this->uploadService->store("images/equipments", $file);
+                $validated = array_merge($validated, ["image" => $file->getFilename()]);
+            }
+            
+            $this->equipmentService->update($id, $validated);
+
+            return to_route('equipment.index')->with([
+                'message' => "Update device '$request->name' successfully"
+            ]);
+        }
+        catch(ValidationException $ex)
+        {
+            return back()->withErrors([
+                'message' => $ex->getMessage()
+            ])->withInput();
+        }
+        catch (ModelNotFoundException $ex)
+        {
+            return to_route('equipment.index')->withErrors(['message' => 'Not found device!']);
+        }
     }
 
     /**
@@ -143,6 +208,17 @@ class EquipmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try
+        {
+            $this->equipmentService->delete($id);
+        }
+        catch(Exception)
+        {
+            return to_route('equipment.index')->withErrors(['message' => 'Can not delete device!']);
+        }
+
+        return to_route('equipment.index')->with([
+            'message' => "Delete device successfully"
+        ]);
     }
 }
