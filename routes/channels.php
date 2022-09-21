@@ -1,5 +1,7 @@
 <?php
 
+use App\Broadcasting\DirectorBookingChannel;
+use App\Broadcasting\ManagerBookingChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -16,3 +18,6 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('booking-director', DirectorBookingChannel::class);
+Broadcast::channel('booking-manager.{department_id}', ManagerBookingChannel::class);

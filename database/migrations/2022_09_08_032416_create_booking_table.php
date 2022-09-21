@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('equipment_id');
+            $table->text('content')->nullable();
             $table->timestamp('booking_date')->useCurrent();
             $table->timestamp('alocated_date')->nullable();
             $table->timestamp('return_intented_date')->nullable();

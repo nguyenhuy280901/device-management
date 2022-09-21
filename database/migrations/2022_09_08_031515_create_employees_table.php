@@ -1,6 +1,5 @@
 <?php
 
-use App\Enumerations\EmployeeRole;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +21,7 @@ return new class extends Migration
             $table->text('password');
             $table->text('remember_token')->nullable();
             $table->unsignedBigInteger('department_id');
-            $table->enum('role', EmployeeRole::values());
+            $table->unsignedBigInteger('role_id');
         });
     }
 

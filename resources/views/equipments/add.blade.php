@@ -38,13 +38,21 @@
                             <form class="form form-equipment" method="POST" action="{{ route('equipment.store') }}">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-3 col-12">
+                                        <div class="wrapper d-flex align-items-center w-100 h-100">
+                                            <div class="form-group w-100">
+                                                <input type="file" class="filepond mt-auto" name="image_json"/>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="col-md-5 col-12 border-start border-dark">
                                         <div class="form-group">
                                             <label for="device-name">Device Name</label>
                                             <input id="device-name" type="text"  class="form-control" placeholder="Device Name" value="{{ old('name') }}" name="name">
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
+
                                         <div class="form-group">
                                             <label for="device-status">Status</label>
                                             <select name="status" id="device-status" class="form-select choices">
@@ -56,8 +64,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
+
                                         <div class="form-group">
                                             <label for="category">Category</label>
                                             <select name="category_id" id="category" class="form-select choices">
@@ -69,8 +76,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
+
                                         <div class="form-group">
                                             <label for="approve-level">Approve Level</label>
                                             <select name="approve_level" id="approve-level" class="form-select choices">
@@ -83,20 +89,16 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-12">
+
+                                    <div class="col-md-4 col-12">
                                         <div class="form-group">
                                             <label for="description">
                                                 Description
                                             </label>
-                                            <textarea class="form-control" id="description" placeholder="Device description" name="description" rows="6">{{ old('description') }}</textarea>
+                                            <textarea class="form-control" id="description" placeholder="Device description" name="description" rows="11">{{ old('description') }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label for="approve-level">Image</label>
-                                            <input type="file" class="filepond" name="image_json"/>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>

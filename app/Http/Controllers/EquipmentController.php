@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enumerations\ApproveLevel;
 use App\Enumerations\EquipmentStatus;
+use App\Events\CreateBookingEvent;
 use App\Services\EquipmentService;
 use App\Services\CategoryService;
 use App\Http\Requests\EquipmentRequest;

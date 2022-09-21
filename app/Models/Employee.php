@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enumerations\EmployeeRole;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +22,7 @@ class Employee extends Authenticatable
         'email',
         'password',
         'department_id',
-        'role'
+        'role_id'
     ];
 
     /**
@@ -48,6 +46,14 @@ class Employee extends Authenticatable
     }
 
     /**
+     * Get the role that the employee belongs to.
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    /**
      * Get the bookings that onws the employee.
      */
     public function bookings()
@@ -55,17 +61,24 @@ class Employee extends Authenticatable
         return $this->hasMany(Booking::class, 'employee_id');
     }
 
+     /**
+	 * 
+     * 
+	 * @return \Illuminate\Database\Eloquent\Collection
+	 */
+	public function permissions()
+	{
+		return $this->role->permissions();
+	}
+
     /**
-     * Get the employee's role
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
-    protected function role(): Attribute
-    {
-        return Attribute::make(
-            get: function($value) {
-                return EmployeeRole::from($value);
-            },
-        );
+	 * Check if employee has permission
+	 * 
+	 * @param string $permission
+	 * @return bool
+	 */
+    public function hasPermission($permission)
+	{
+        return $this->permissions()->pluck('slug')->contains($permission);
     }
 }

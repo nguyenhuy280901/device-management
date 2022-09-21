@@ -1,5 +1,9 @@
+@php
+    use \App\Enumerations\EmployeeRole;
+@endphp
+
 <div id="sidebar" class="active">
-    <div class="sidebar-wrapper active  bg-light">
+    <div class="sidebar-wrapper active bg-light">
         <div class="sidebar-header">
             <div class="d-flex justify-content-between">
                 <div class="logo">
@@ -15,15 +19,13 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li @class(['sidebar-item', 'active' => Route::current()->getName() == 'dashboard.index'])>
-                    <a href="{{ route('dashboard.index') }}" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                    <a href="{{ route('dashboard.index') }}" class="sidebar-link">
                         <span>Dashboard</span>
                     </a>
                 </li>
 
                 <li @class(['sidebar-item', 'has-sub', 'active' => request()->is(['category', 'category/*'])])>
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-person-badge-fill"></i>
                         <span>Category</span>
                     </a>
                     <ul @class(['submenu', 'active' => request()->is(['category', 'category/*'])])>
@@ -38,7 +40,6 @@
 
                 <li @class(['sidebar-item', 'has-sub', 'active' => request()->is(['equipment', 'equipment/*'])])>
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
                         <span>Equipment</span>
                     </a>
                     <ul @class(['submenu', 'active' => request()->is(['equipment', 'equipment/*'])])>
@@ -53,7 +54,6 @@
 
                 <li @class(['sidebar-item', 'has-sub', 'active' => request()->is(['department', 'department/*'])])>
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-person-badge-fill"></i>
                         <span>Department</span>
                     </a>
                     <ul @class(['submenu', 'active' => request()->is(['department', 'department/*'])])>
@@ -68,7 +68,6 @@
 
                 <li @class(['sidebar-item', 'has-sub', 'active' => request()->is(['employee', 'employee/*'])])>
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-person-badge-fill"></i>
                         <span>Employee</span>
                     </a>
                     <ul @class(['submenu', 'active' => request()->is(['employee', 'employee/*'])])>
@@ -81,35 +80,47 @@
                     </ul>
                 </li>
 
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-x-octagon-fill"></i>
-                        <span>Booking</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="submenu-item">
-                            <a href="error-403.html">List</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="error-404.html">Add</a>
-                        </li>
-                    </ul>
-                </li>
+                @can('book-device')
+                    <li @class(['sidebar-item', 'active' => request()->is('booking/create')])>
+                        <a href="{{ route('booking.create') }}" class="sidebar-link">
+                            <span>Book Device</span>
+                        </a>
+                    </li>
+                @endcan
+                
+                @canany(['approve-booking-manager', 'approve-booking-director'])
+                    <li @class(['sidebar-item', 'active' => request()->is('booking')])>
+                        <a href="{{ route('booking.index') }}" class="sidebar-link">
+                            <span>List Bookings</span>
+                            <span class="badge bg-danger rounded-pill ms-1 text-bg-danger">4</span>
+                        </a>
+                    </li>
+                @endcanany
+
+                @can('authorize')
+                    <li @class(['sidebar-item', 'active' => request()->is('authorize')])>
+                        <a href="{{ route('authorize.index') }}" class='sidebar-link'>
+                            <span>Authorization</span>
+                        </a>
+                    </li>
+                @endcan
 
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-x-octagon-fill"></i>
                         <span>Account</span>
                     </a>
                     <ul class="submenu">
                         <li class="submenu-item">
-                            <a href="error-403.html">Account Information</a>
+                            <a href="error-403.html">Information</a>
                         </li>
                         <li class="submenu-item">
                             <a href="error-403.html">Change Password</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="error-404.html">Sign Out</a>
+                            <a href="javascript:void(0)" onclick="document.getElementById('form-logout').submit();">Sign Out</a>
+                            <form id="form-logout" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </li>

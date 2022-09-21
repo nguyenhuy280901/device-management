@@ -141,4 +141,32 @@ $(function() {
             }
         }
     });
+
+    // Validate data form add booking
+    $(".form-booking").validate({
+        rules: {
+            equipment_id: {
+                required: true
+            },
+            content: {
+                required: true,
+                maxlength: 255
+            },
+            return_intented_date: {
+                required: true
+            }
+        },
+        messages: {
+            equipment_id: {
+                required: "Please choose equipment",
+            },
+            content: {
+                required: "Please types the content of your booking",
+                maxlength: "The booking's content is too long. Please truncates booking's content!"
+            },
+            return_intented_date: {
+                required: 'Please choose equipment intented return date'
+            }
+        }
+    });
 })

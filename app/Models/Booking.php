@@ -10,6 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     use HasFactory;
+    
+    public $timestamps = false;
+    protected $fillable = [
+        'equipment_id', 'employee_id', 'content', 'booking_date',
+        'alocated_date', 'return_intented_date', 'return_actual_date',
+    ];
 
     protected $casts = [
         'booking_date'  => 'datetime:Y-m-d H:i:s',

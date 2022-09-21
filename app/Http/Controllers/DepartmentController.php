@@ -93,22 +93,15 @@ class DepartmentController extends Controller
         {
             $department = $this->departmentService->find($id);
             $employees = $department->employees;
-            $manager =  $employees->filter(function ($employee) {
-                return $employee->role == EmployeeRole::MANAGER;
-            })->first();
-            $staffs = $employees->filter(function ($employee) {
-                return $employee->role != EmployeeRole::MANAGER;
-            });
         }
-        catch(ModelNotFoundException $ex)
+        catch(ModelNotFoundException)
         {
             return to_route('category.index')->withErrors(['message' => 'Not found department!']);
         }
        
         return view('departments.detail', [
             'department' => $department,
-            'employees' => $staffs,
-            'manager' => $manager,
+            'employees' => $employees
         ]);
     }
 
@@ -124,7 +117,7 @@ class DepartmentController extends Controller
         {
             $department = $this->departmentService->find($id);
         }
-        catch(ModelNotFoundException $ex)
+        catch(ModelNotFoundException)
         {
             return to_route('department.index')->withErrors(['message' => 'Not found department!']);
         }
@@ -157,7 +150,7 @@ class DepartmentController extends Controller
                 'message' => $ex->getMessage()
             ])->withInput();
         }
-        catch(ModelNotFoundException $ex)
+        catch(ModelNotFoundException)
         {
             return to_route('department.index')->withErrors(['message' => 'Not found department!']);
         }

@@ -22,4 +22,5 @@ Route::middleware('auth')->group(function() {
     Route::resource('/employee', \App\Http\Controllers\EmployeeController::class);
     Route::resource('/booking', \App\Http\Controllers\BookingController::class);
     Route::resource('/department', \App\Http\Controllers\DepartmentController::class);
+    Route::resource('/authorize', \App\Http\Controllers\AuthorizationController::class);
 });

@@ -38,7 +38,7 @@
                                             <strong>Department: </strong> {{ $employee->department->name }}
                                         </div>
                                         <div class="field col-6">
-                                            <strong>Role: </strong> {{ $employee->role->description() }}
+                                            <strong>Role: </strong> {{ $employee->role->name }}
                                         </div>
                                     </div>
                                     

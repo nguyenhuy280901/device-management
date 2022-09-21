@@ -113,11 +113,11 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label for="role">Role</label>
-                                                    <select name="role" id="role" class="form-select choices">
+                                                    <select name="role_id" id="role" class="form-select choices">
                                                         <option value="">Choose role</option>
                                                         @foreach ($roles as $role)
-                                                            <option value="{{ $role->value }}" @selected(($employee->role->value ?? old('role_id')) == $role->value)>
-                                                                {{ $role->description() }}
+                                                            <option value="{{ $role->id }}" @selected(($employee->role->id ?? old('role_id')) == $role->id)>
+                                                                {{ $role->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>

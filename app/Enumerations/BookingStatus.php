@@ -4,12 +4,13 @@ namespace App\Enumerations;
 
 enum BookingStatus: int
 {
-    case PENDING = 1;
-    case APPROVED = 2;
-    case DISAPPROVED = 3;
-    case ALLOCATED = 4;
-    case RETURNED = 5;
-    case OUTOFDATE = 6;
+    case PENDINGMANAGER = 1;
+    case PENDINGDIRECTOR = 2;
+    case APPROVED = 3;
+    case DISAPPROVED = 4;
+    case ALLOCATED = 5;
+    case RETURNED = 6;
+    case OUTOFDATE = 7;
 
     public static function values(): array
     {
@@ -20,7 +21,8 @@ enum BookingStatus: int
     {
         return match($this) 
         {
-            BookingStatus::PENDING => 'Pending',
+            BookingStatus::PENDINGMANAGER => 'Pending Manager',
+            BookingStatus::PENDINGDIRECTOR => 'Pending Director',
             BookingStatus::APPROVED => 'Approved',
             BookingStatus::DISAPPROVED => 'Disapproved',
             BookingStatus::ALLOCATED => 'Allocated',
@@ -33,7 +35,8 @@ enum BookingStatus: int
     {
         return match($this) 
         {
-            BookingStatus::PENDING => 'primary',
+            BookingStatus::PENDINGMANAGER => 'primary',
+            BookingStatus::PENDINGDIRECTOR => 'primary',
             BookingStatus::APPROVED => 'success',
             BookingStatus::DISAPPROVED => 'secondary',
             BookingStatus::ALLOCATED => 'info',

@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Enumerations\EmployeeRole;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class UpdateEmployeeRequest extends FormRequest
@@ -33,7 +31,7 @@ class UpdateEmployeeRequest extends FormRequest
             'email' => 'required|email|unique:employees,email,' . $this->employee,
             'password' => 'required|max:255',
             'department_id' => 'required|exists:departments,id',
-            'role' => ['required', Rule::in(EmployeeRole::values())]
+            'role_id' => 'required|exists:roles,id'
         ];
     }
 
@@ -55,7 +53,7 @@ class UpdateEmployeeRequest extends FormRequest
             'department_id.required' => 'Please choose the deparment that employee is working at',
             'department_id.exists' => 'Invalid the employee\'s department',
             'role.required' => 'Please choose the employee\'s role',
-            'role.in' => 'Invalid the employee\'s role',
+            'role_id.exists' => 'Invalid the employee\'s role',
         ];
     }
 

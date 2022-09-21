@@ -15,12 +15,14 @@
     <base href="{{ asset('') }}"/>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+    @vite('resources/sass/app.scss')
 
     <!-- Page CSS -->
     @yield('page-css')
 
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
     <div id="app">
@@ -53,13 +55,25 @@
         @endauth
     </div>
 
+    @auth
+        <script>
+            window.User = {
+                id: {{ auth()->user()->id }},
+                departmentId: {{ auth()->user()->department_id }},
+            }
+        </script>
+    @endauth
+
     <!-- Scripts -->
     <script src="vendor/js/jquery-3.6.1.min.js"></script>
     <script src="vendor/js/popper.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    {{-- @vite('resources/js/app.js', 'build') --}}
+    @vite('resources/js/app.js')
+    
     <!-- Page JS -->
     @yield('page-js')
-
+    
     <script src="js/main.js"></script>
     <script src="js/script.js"></script>
 

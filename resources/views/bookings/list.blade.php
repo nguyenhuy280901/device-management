@@ -1,6 +1,3 @@
-@php
-    use \App\Enumerations\BookingStatus;
-@endphp
 <table class="table table-striped" id="table-equipments">
     <thead>
         <tr>
@@ -12,9 +9,7 @@
             <th>Image</th>
             <th>Status</th>
             <th>Booking Date</th>
-            <th>Allocated date</th>
-            <th>Intended return date</th>
-            <th>Actual return date</th>
+            <th>Content</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -44,9 +39,7 @@
                 </td>
                 
                 <td>{{ $booking->booking_date }}</td>
-                <td>{{ $booking->alocated_date }}</td>
-                <td>{{ $booking->return_intented_date }}</td>
-                <td>{{ $booking->return_actual_date }}</td>
+                <td>{{ $booking->content }}</td>
                 <td>
                     @include('bookings.action')
                 </td>

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\EquipmentService;
-use App\Services\Service;
-use App\Services\ServiceInterface;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller

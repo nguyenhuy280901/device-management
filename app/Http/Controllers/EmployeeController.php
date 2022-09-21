@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Enumerations\EmployeeRole;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Services\DepartmentService;
 use App\Services\EmployeeService;
+use App\Services\RoleService;
 use App\Services\UploadService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
@@ -29,6 +28,12 @@ class EmployeeController extends Controller
 
     /**
      * 
+     * @var RoleService
+     */
+    private $roleService;
+
+    /**
+     * 
      * @var UploadService
      */
     private $uploadService;
@@ -42,12 +47,14 @@ class EmployeeController extends Controller
     public function __construct(
         EmployeeService $employeeService,
         DepartmentService $departmentService,
-        UploadService $uploadService
+        UploadService $uploadService,
+        RoleService $roleService
     )
     {
         $this->employeeService = $employeeService;
         $this->departmentService = $departmentService;
         $this->uploadService = $uploadService;
+        $this->roleService = $roleService;
     }
 
     /**
@@ -72,7 +79,7 @@ class EmployeeController extends Controller
     public function create()
     {
         $departments = $this->departmentService->getAll();
-        $roles = EmployeeRole::cases();
+        $roles = $this->roleService->getAll();
 
         return view('employees.add', [
             'departments' => $departments,
@@ -155,7 +162,7 @@ class EmployeeController extends Controller
         }
         
         $departments = $this->departmentService->getAll();
-        $roles = EmployeeRole::cases();
+        $roles = $this->roleService->getAll();
 
         return view('employees.edit', [
             'employee' => $employee,
