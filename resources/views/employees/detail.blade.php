@@ -45,27 +45,17 @@
                                     <div class="action">
                                         <strong>Action</strong>
                                         <div class="border border-danger p-2 round-2 d-flex justify-content-center">
-                                            <a href="{{ route('employee.edit', ['employee' => $employee->id]) }}" class="btn btn-warning" title="Edit employee's profile">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
-                                            <form action="{{ route('employee.destroy', ['employee' => $employee->id]) }}" method="POST" class="mx-2" onsubmit="return confirm('Do you want to delete employee \'{{ $employee->fullname }}?\'')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
-                                            </form>
-                                            <a href="{{ route('employee.index') }}" class="btn btn-secondary" title="Return back">
-                                                <i class="fa-solid fa-rotate-left"></i>
-                                            </a>
+                                            @include('employees.action')
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-12 mt-4">
-                                    <h4>List Bookings</h4>
-                                    @include('bookings.list')
-                                </div>
+                                @canany(['view-all-device', 'view-department-device'])
+                                    <div class="col-12 mt-4">
+                                        <h4>List Devices</h4>
+                                        @include('equipments.list')
+                                    </div>
+                                @endcanany
                             </div>
                         </div>
                     </div>

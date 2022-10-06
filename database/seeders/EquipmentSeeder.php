@@ -30,7 +30,7 @@ class EquipmentSeeder extends Seeder
                 'name' => 'Monitor ViewSonic 1',
                 'description' => '',
                 'image' => 'monitor-viewsonic-1.jpg',
-                'status' => EquipmentStatus::ALLOCATED,
+                'status' => EquipmentStatus::AVAILABLE,
                 'approve_level' => ApproveLevel::MANAGER,
                 'category_id' => 4
             ],

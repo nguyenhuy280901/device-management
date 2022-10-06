@@ -18,6 +18,7 @@ $(function() {
                 $("input.permission-check").prop('checked', false);
                 $("input.permission-check").prop('disabled', false);
                 $("#update-permissions").prop('disabled', false);
+                $("#reset").prop('disabled', false);
 
                 permissions.forEach(permission => {
                     $(`input.permission-check[value=${permission.id}]`).prop('checked', true);
@@ -31,8 +32,7 @@ $(function() {
         $("input.permission-check").prop('checked', false);
         $("input.permission-check").prop('disabled', true);
         $("#update-permissions").prop('disabled', true);
-
-        displayError(false);
+        $("#reset").prop('disabled', true);
     });
 
     $("#update-permissions").click(function(event) {
@@ -48,6 +48,8 @@ $(function() {
             window.showToast('Please choose a role!', {background: '#FF4A4A'});
             return;
         }
+
+        console.log(permissions);
         
         $.ajax({
             headers: {
@@ -60,13 +62,16 @@ $(function() {
                 role_id: role_id
             }
         }).then(function(response) {
-            console.log(response);
-
             displayUpdateResult(response);
 
             displayUpdatingButton(false);
             $("#update-permissions").prop('disabled', true);
+            $("#reset").prop('disabled', true);
         });
+    });
+
+    $('#reset').click(function(event) {
+        $("input.permission-check").prop('checked', false);
     });
 });
 
@@ -79,7 +84,7 @@ function displayLoadingButton(isLoading = true)
     ` :
     'Load Permissions';
 
-    $("#load-pemissions").attr('disabled', isLoading);
+    $("#load-pemissions").prop('disabled', isLoading);
     $("#load-pemissions").html(content);
 }
 
@@ -92,8 +97,9 @@ function displayUpdatingButton(isUpdating = true)
     ` :
     'Update Permissions';
 
-    $("#update-permissions").attr('disabled', isUpdating);
+    $("#update-permissions").prop('disabled', isUpdating);
     $("#update-permissions").html(content);
+    $("#reset").attr('disabled', isUpdating);
 }
 
 function displayUpdateResult(result)

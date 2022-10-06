@@ -13,7 +13,7 @@ class Booking extends Model
     
     public $timestamps = false;
     protected $fillable = [
-        'equipment_id', 'employee_id', 'content', 'booking_date',
+        'equipment_id', 'employee_id', 'content', 'booking_date', 'status',
         'alocated_date', 'return_intented_date', 'return_actual_date',
     ];
 
@@ -51,6 +51,14 @@ class Booking extends Model
             get: function($value) {
                 return BookingStatus::from($value);
             },
+            set: function(BookingStatus|string $status) {
+                if($status instanceof BookingStatus)
+                {
+                    return $status->value;
+                }
+
+                return $status;
+            }
         );
     }
 }

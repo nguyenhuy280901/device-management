@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\AuthorizationRequest;
 use App\Services\PermissionService;
@@ -8,9 +8,10 @@ use App\Services\RoleService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
 
-class AuthorizationController extends Controller
+class AuthorizeController extends Controller
 {
     /**
      * @var PermissonService
@@ -24,7 +25,7 @@ class AuthorizationController extends Controller
 
     /**
      * 
-     * BookingController constructor
+     * AuthorizeController constructor
      * 
      * @return void
      */
@@ -122,7 +123,8 @@ class AuthorizationController extends Controller
             $request->validated();
 
             $role = $this->roleService->find($id);
-            $role->refreshPermissions($request->permissions);
+            $role->refreshPermissions($request->permissions ?? []);
+            $role->refresh();
 
             $response = [
                 "status" => "success",

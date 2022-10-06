@@ -8,34 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 interface ServiceInterface
 {
     /**
-     * 
      * Get list all of models
      * 
+     * @param  array  $columns
      * @return Collection
      */
-    public function getAll();
+    public function getAll(array $columns = null): Collection;
 
     /**
-     * 
-     * Get list models with relations
-     * 
-     * @param  array|string  $relations
-     * @return Collection
-     */
-    public function getWithRelations($relations): Collection;
-
-    /**
-     * 
      * Get list models by conditions
      * 
-     * @param  array|string  $conditions
+     * @param array $conditions
+     * @param array $options
      * @return Collection
      */
-    public function getByConditions($conditions): Collection;
-
+    public function getBy(array $conditions, array $options = null): Collection;
 
     /**
-     * 
      * Create new model
      * 
      * @param array $attributes
@@ -44,7 +33,6 @@ interface ServiceInterface
     public function create($attributes): Model;
 
     /**
-     * 
      * Find a model by id
      * 
      * @param string $id
@@ -53,17 +41,15 @@ interface ServiceInterface
     public function find($id): Model;
 
     /**
-     * 
      * Update a model in database
      * 
-     * @param string $id
+     * @param array|string $id
      * @param array $attributes
      * @return bool
      */
     public function update($id, $attributes): bool;
 
     /**
-     * 
      * Remove the specified model from storage.
      * 
      * @param string $id

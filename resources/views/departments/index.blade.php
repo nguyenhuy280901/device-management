@@ -11,13 +11,15 @@
         let dataTable =  new simpleDatatables.DataTable(table);
     </script>
 @endsection
-@section('action-button')
+@can('create-department')
+    @section('action-button')
     <div class="action-button d-flex justify-content-end p-3">
         <a href="{{ route('department.create') }}" class="btn btn-success mx-2" title="Add new department">
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>
-@endsection
+    @endsection
+@endcan
 @section('content')
     <section class="section">
         <div class="card">
@@ -38,19 +40,7 @@
                                 <td>{{ $department->name }}</td>
                                 <td>{{ $department->description }}</td>
                                 <td class="d-flex justify-content-between">
-                                    <a href="{{ route('department.show', ['department' => $department->id]) }}" class="btn btn-success">
-                                        <i class="fa-regular fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('department.edit', ['department' => $department->id]) }}" class="btn btn-warning">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                    <form action="{{ route('department.destroy', ['department' => $department->id]) }}" method="POST" onsubmit="return confirm('Do you want to delete department \'{{ $department->name }}?\'')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                    </form>
+                                    @include('departments.action')
                                 </td>
                             </tr>
                         @endforeach

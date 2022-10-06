@@ -18,11 +18,24 @@
             FilePondPluginFileEncode
         );
 
+        let options  = {
+            acceptedFileTypes: ['image/png','image/jpg','image/jpeg']
+        };
+
+        let old_image = document.querySelector('input[name=old_image]').value;
+
+        if(old_image !== '')
+        {
+            let image = new Image();
+            let data = JSON.parse(old_image).data;
+            console.log(data);
+            image.src = data;
+            options.files = [{ source: image }];
+        }
+
         // Select the file input and use 
         // create() to turn it into a pond
-        FilePond.create(document.querySelector('.filepond'),  {
-            acceptedFileTypes: ['image/png','image/jpg','image/jpeg'],
-        });
+        FilePond.create(document.querySelector('.filepond'),  options);
     </script>
     <script src="vendor/choices.js/choices.min.js"></script>
     <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -43,6 +56,8 @@
                                             <div class="form-group w-100">
                                                 <input type="file" class="filepond mt-auto" name="image_json"/>
                                             </div>
+
+                                            <input type="hidden" name="old_image" value="{{ old('image_json') }}">
                                         </div>
                                         
                                     </div>

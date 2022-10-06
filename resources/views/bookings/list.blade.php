@@ -1,4 +1,4 @@
-<table class="table table-striped" id="table-equipments">
+<table class="table table-striped" id="table-booking">
     <thead>
         <tr>
             <th>#</th>
@@ -17,17 +17,11 @@
         @foreach ($bookings as $booking)
             <tr>
                 <td>{{ $loop->index + 1 }}</td>
-                @empty($employee)
-                    <td>
-                        <a href="{{ route('employee.show', ['employee' => $booking->employee->id]) }}">
-                            {{  $booking->employee->fullname }}
-                        </a>
-                    </td>
-                @endempty
                 <td>
-                    <a href="{{ route('equipment.show', ['equipment' => $booking->equipment->id]) }}">
-                        {{ $booking->equipment->name }}
-                    </a>
+                    {{  $booking->employee->fullname }}
+                </td>
+                <td>
+                    {{ $booking->equipment->name }}
                 </td>
                 <td>
                     <img style="width: 140px; height: 100px;" src="images/equipments/{{ $booking->equipment->image }}" alt="{{ $booking->equipment->name }}">
@@ -40,10 +34,17 @@
                 
                 <td>{{ $booking->booking_date }}</td>
                 <td>{{ $booking->content }}</td>
-                <td>
-                    @include('bookings.action')
+                <td style="width: 60px;">
+                    @include('bookings.actions.action')
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
+
+<script>
+    function submitForm(status, booking){
+        document.querySelector(`.form-booking.form-booking-${ booking } input[name=status]`).setAttribute('value', status);
+        document.querySelector(`.form-booking.form-booking-${ booking }`).submit();
+    }
+</script>

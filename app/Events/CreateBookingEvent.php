@@ -2,9 +2,11 @@
 
 namespace App\Events;
 
+use App\Enumerations\BookingStatus;
 use App\Enumerations\EmployeeRole;
 use App\Models\Booking;
 use App\Models\Employee;
+use App\Models\Equipment;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -24,13 +26,12 @@ class CreateBookingEvent implements ShouldBroadcast
      * Create a new event instance.
      *
      * @param Booking $booking
-     * @param Employee $employee
      * @return void
      */
-    public function __construct(Booking $booking, Employee $employee)
+    public function __construct(Booking $booking)
     {
         $this->booking = $booking;
-        $this->employee = $employee;
+        $this->employee = $this->booking->employee;
     }
 
     /**
@@ -40,6 +41,15 @@ class CreateBookingEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('booking-manager.' . $this->booking->employee->department_id);
+        $channels = [
+            new PrivateChannel('booking-director')
+        ];
+
+        if($this->booking->status == BookingStatus::PENDINGMANAGER)
+        {
+            array_push($channels, new PrivateChannel('booking-manager.' . $this->employee->department_id));
+        }
+
+        return $channels;
     }
 }

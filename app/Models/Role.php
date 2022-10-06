@@ -9,6 +9,11 @@ class Role extends Model
 {
     use HasFactory;
 
+	protected $fillable = [
+        'name', 'slug'
+    ];
+	public $timestamps = false;
+
     /**
 	 * 
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -26,23 +31,20 @@ class Role extends Model
 	 */
 	public function grantPermissions(array $permissions): Model
 	{
-        $permissions = Permission::whereIn('id', $permissions)->get();
-
-        if($permissions != null) {
-			$this->permissions()->saveMany($permissions);
-        }
+		$this->permissions()->saveMany(Permission::whereIn('id', $permissions)->get());
 
         return $this;
     }
  
 	/**
-	 * Revoke all permissions of a role
+	 * Revoke permissions of a role
 	 * 
+	 * @param array $permissions
 	 * @return \Illuminate\Database\Eloquent\Model
 	 */
-    public function revokePermissions()
+    public function revokePermissions(array $permissions)
 	{
-		$this->permissions()->detach();
+		$this->permissions()->detach(Permission::whereIn('id', $permissions)->get());
 
 		return $this;
  	}
@@ -55,8 +57,12 @@ class Role extends Model
 	 */
     public function refreshPermissions(array $permissions)
 	{
-		$this->revokePermissions();
-		$this->grantPermissions($permissions);
+		$oldPermissions = $this->permissions->pluck('id')->toArray();
+		$attachPermissions = array_diff($permissions, $oldPermissions);
+		$detachPermissions = array_diff($oldPermissions, $permissions);
+
+		$this->revokePermissions($detachPermissions);
+		$this->grantPermissions($attachPermissions);
 
 		return $this;
  	}

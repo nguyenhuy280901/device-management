@@ -17,16 +17,7 @@ class BookingSeeder extends Seeder
     public function run()
     {
         $bookings = [
-            [
-                'employee_id' => 1,
-                'equipment_id' => 1,
-                'status' => BookingStatus::PENDINGMANAGER
-            ],
-            [
-                'employee_id' => 1,
-                'equipment_id' => 3,
-                'status' => BookingStatus::APPROVED
-            ],
+           
         ];
 
         DB::table('bookings')->insert($bookings);

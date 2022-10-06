@@ -11,13 +11,17 @@
         let dataTable =  new simpleDatatables.DataTable(table);
     </script>
 @endsection
-@section('action-button')
+
+@can('create-category')
+    @section('action-button')
     <div class="action-button d-flex justify-content-end p-3">
         <a href="{{ route('category.create') }}" class="btn btn-success mx-2" title="Add new category">
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>
-@endsection
+    @endsection
+@endcan
+
 @section('content')
     <section class="section">
         <div class="card">
@@ -38,19 +42,7 @@
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->description }}</td>
                                 <td class="d-flex justify-content-between">
-                                    <a href="{{ route('category.show', ['category' => $category->id]) }}" class="btn btn-success">
-                                        <i class="fa-regular fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('category.edit', ['category' => $category->id]) }}" class="btn btn-warning">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                    <form action="{{ route('category.destroy', ['category' => $category->id]) }}" method="POST" onsubmit="return confirm('Do you want to delete category \'{{ $category->name }}?\'')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                    </form>
+                                    @include('categories.action')
                                 </td>
                             </tr>
                         @endforeach

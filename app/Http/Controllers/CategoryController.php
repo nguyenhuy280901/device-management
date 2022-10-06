@@ -26,6 +26,12 @@ class CategoryController extends Controller
         CategoryService $categoryService
     )
     {
+        // Authorize
+        $this->middleware('can:view-category')->only('index', 'show');
+        $this->middleware('can:create-category')->only('create', 'store');
+        $this->middleware('can:update-category')->only('edit', 'update');
+        $this->middleware('can:delete-category')->only('destroy');
+
         $this->categoryService = $categoryService;
     }
 
@@ -90,17 +96,15 @@ class CategoryController extends Controller
         try
         {
             $category = $this->categoryService->find($id);
-            $equipments = $category->equipments;
         }
-        catch(ModelNotFoundException $ex)
+        catch(ModelNotFoundException)
         {
             return to_route('category.index')->withErrors(['message' => 'Not found category!']);
         }
        
 
         return view('categories.detail', [
-            'category' => $category,
-            'equipments' => $equipments
+            'category' => $category
         ]);
     }
 
@@ -116,7 +120,7 @@ class CategoryController extends Controller
         {
             $category = $this->categoryService->find($id);
         }
-        catch(ModelNotFoundException $ex)
+        catch(ModelNotFoundException)
         {
             return to_route('category.index')->withErrors(['message' => 'Not found category!']);
         }
@@ -149,7 +153,7 @@ class CategoryController extends Controller
                 'message' => $ex->getMessage()
             ])->withInput();
         }
-        catch(ModelNotFoundException $ex)
+        catch(ModelNotFoundException)
         {
             return to_route('category.index')->withErrors(['message' => 'Not found category!']);
         }
@@ -169,7 +173,7 @@ class CategoryController extends Controller
         }
         catch(Exception)
         {
-            return to_route('equipment.index')->withErrors(['message' => 'Can not delete category!']);
+            return to_route('category.index')->withErrors(['message' => 'Can not delete category!']);
         }
         return to_route('category.index')->with([
             'message' => "Delete category successfully"

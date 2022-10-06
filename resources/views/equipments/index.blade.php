@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') List Devices @endsection
+@section('title') {{ $title }} @endsection
 @section('page-css')
     <link rel="stylesheet" href="vendor/simple-datatables/style.css">
 @endsection
@@ -11,13 +11,17 @@
         let dataTable =  new simpleDatatables.DataTable(table);
     </script>
 @endsection
-@section('action-button')
+
+@can('create-device')
+    @section('action-button')
     <div class="action-button d-flex justify-content-end p-3">
         <a href="{{ route('equipment.create') }}" class="btn btn-success mx-2" title="Add new device">
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>
-@endsection
+    @endsection
+@endcan
+
 @section('content')
     <section class="section">
         <div class="card">

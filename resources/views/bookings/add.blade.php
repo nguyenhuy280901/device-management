@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title') Add Employee @endsection
+@section('title') Book Device @endsection
 @section('page-css')
     <link rel="stylesheet" href="vendor/choices.js/choices.min.css">
 @endsection
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-booking" method="POST" action="{{ route('booking.store') }}">
+                            <form class="form form-booking" method="POST" action="{{ route('book-device.store') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 col-12">

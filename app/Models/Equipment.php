@@ -29,6 +29,13 @@ class Equipment extends Model
             get: function($value) {
                 return EquipmentStatus::from($value);
             },
+            set: function(EquipmentStatus|string $status) {
+                if($status instanceof EquipmentStatus)
+                {
+                    return $status->value;
+                }
+                return $status;
+            }
         );
     }
 

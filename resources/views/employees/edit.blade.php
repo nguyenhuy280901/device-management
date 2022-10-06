@@ -87,12 +87,7 @@
                                                 <div class="form-group">
                                                     <label for="employee-password">Password</label>
                                                     
-                                                    <div class="input-group">
-                                                        <input id="employee-password" type="password"  class="form-control" placeholder="Password" value="{{ Str::limit($employee->password, 15) }}" disabled>
-                                                        <a class="btn btn-secondary">
-                                                            <i class="fa-solid fa-pen-to-square"></i>
-                                                        </a>
-                                                    </div>
+                                                    <input id="employee-password" type="password"  class="form-control" placeholder="Password" value="{{ Str::limit($employee->password, 15) }}" disabled>
                                                 </div>
                                             </div>
 

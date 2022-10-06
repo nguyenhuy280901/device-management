@@ -87,7 +87,8 @@ $(function() {
             },
             password: {
                 maxlength: 255,
-                required: true
+                required: true,
+                valid_password: true
             },
             department_id: {
                 required: true
@@ -109,7 +110,8 @@ $(function() {
             },
             password: {
                 maxlength: 'The password is too long. Please truncates the employee\'s password!',
-                required: 'Please types the password of employee\'s account'
+                required: 'Please types the password of employee\'s account',
+                valid_password: 'New password should have minimum eight characters, at least one letter and one number'
             },
             department_id: {
                 required: 'Please choose the deparment that employee is working at'
@@ -142,6 +144,22 @@ $(function() {
         }
     });
 
+    // Validate data form add role
+    $(".form-role").validate({
+        rules: {
+            name: {
+                required: true,
+                maxlength: 255
+            }
+        },
+        messages: {
+            name: {
+                required: "Please types role's name",
+                maxlength: "The role's name is too long. Please truncates your role's name!"
+            }
+        }
+    });
+
     // Validate data form add booking
     $(".form-booking").validate({
         rules: {
@@ -169,4 +187,41 @@ $(function() {
             }
         }
     });
+
+    // Validate data form change password
+    $(".form-change-password").validate({
+        rules: {
+            current_password: {
+                required: true
+            },
+            new_password: {
+                required: true,
+                valid_password: true,
+                maxlength: 255
+            },
+            confirm_password: {
+                required: true,
+                equalTo : "#new-password"
+            }
+        },
+        messages: {
+            current_password: {
+                required: "Please type the current password"
+            },
+            new_password: {
+                required: "Please type the new password",
+                valid_password: "New password should have minimum eight characters, at least one letter and one number",
+                maxlength: "The new password is too long. Please truncate it!"
+            },
+            confirm_password: {
+                required: "Please type the confirm password",
+                equalTo : "Confirm password does not match with new password"
+            }
+        }
+    });
 })
+
+jQuery.validator.addMethod('valid_password', function (value) {
+    var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return value.trim().match(regex);
+});

@@ -26,8 +26,6 @@ class AuthorizationRequest extends FormRequest
     {
         return [
             'role_id' => 'required|exists:roles,id',
-            'permissions' => 'required',
-            'permissions.*' => 'exists:permissions,id'
         ];
     }
 
@@ -40,8 +38,6 @@ class AuthorizationRequest extends FormRequest
         return [
             'role_id.required' => 'Missing role id',
             'role_id.exists' => 'Invalid role',
-            'permissions.required' => 'Missing permissions',
-            'permissions.*.exists' => 'Invalid permissions',
         ];
     }
 }

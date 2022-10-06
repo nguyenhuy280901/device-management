@@ -30,17 +30,23 @@
                                     <div class="action">
                                         <strong>Action</strong>
                                         <div class="border border-danger p-2 round-2 d-flex justify-content-center">
-                                            <a href="{{ route('equipment.edit', ['equipment' => $equipment->id]) }}" class="btn btn-warning">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
-                                            <form action="{{ route('equipment.destroy', ['equipment' => $equipment->id]) }}" method="POST" class="mx-2" onsubmit="return confirm('Do you want to delete device \'{{ $equipment->name }}?\'')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
-                                            </form>
-                                            <a href="{{ route('equipment.index') }}" class="btn btn-secondary" title="Return back">
+                                            @can('update-device')
+                                                <a href="{{ route('equipment.edit', ['equipment' => $equipment->id]) }}" class="btn btn-warning">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                            @endcan
+                                            
+                                            @can('delete-device')
+                                                <form action="{{ route('equipment.destroy', ['equipment' => $equipment->id]) }}" method="POST" class="mx-2" onsubmit="return confirm('Do you want to delete device \'{{ $equipment->name }}?\'')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
+                                            
+                                            <a href="{{ url()->previous() }}" class="btn btn-secondary" title="Return back">
                                                 <i class="fa-solid fa-rotate-left"></i>
                                             </a>
                                         </div>

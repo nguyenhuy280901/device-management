@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Booking;
 
 use App\Enumerations\BookingStatus;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
-class UpdateBookingRequest extends FormRequest
+class ApproveBookingDirectorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +28,12 @@ class UpdateBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => ['required', Rule::in(BookingStatus::values())],
+            'status' => ['required', Rule::in(
+                [BookingStatus::APPROVED->value, BookingStatus::DISAPPROVED->value]
+            )]
         ];
     }
-
+    
     /**
      * 
      * @return array
@@ -40,5 +44,10 @@ class UpdateBookingRequest extends FormRequest
             'status.required' => 'Please choose booking\'s status',
             'status.in' => 'Invalid booking\'s status',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        return new ValidationException($validator);
     }
 }

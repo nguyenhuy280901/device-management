@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,35 +26,46 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Get list all of models
+     * Get list of models
      * 
-     * @return Model
+     * @param array|string $columns
+     * @return Collection
      */
-    public function all(): Collection
+    public function get(array|string $columns): Collection
     {
-        return $this->model->all();
+        return $this->model->select($columns)->get();
+    }
+
+    /**
+     * Begin querying the model.
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function query(): Builder
+    {
+        return $this->model->query();
     }
 
     /**
      * Get list models with eager loading
      *
      * @param  array|string  $relations
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function with($relations): Collection
+    public function with($relations): Builder
     {
-        return $this->model->with($relations)->get();
+        return $this->model->with($relations);
     }
 
     /**
-     * Get list models by conditions
+     * Querying a model by conditions
      *
-     * @param  array  $conditions
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @param array $conditions
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function where($conditions): Collection
+    public function where($conditions): Builder
     {
-        return $this->model->where($conditions)->get();
+        return $this->model->where($conditions);
     }
 
     /**
@@ -68,7 +80,6 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * 
      * Find a model by id
      * 
      * @param string $id
@@ -80,7 +91,6 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * 
      * Update a model in database
      * 
      * @param string $id
@@ -93,7 +103,6 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * 
      * Remove the specified model from storage.
      * 
      * @param string $id
@@ -102,5 +111,15 @@ class Repository implements RepositoryInterface
     public function delete($id): bool|null
     {
         return $this->model->find($id)->delete();
+    }
+
+    /**
+     * Get the primary key for the model.
+     * 
+     * @return string
+     */
+    public function getKeyName(): string
+    {
+        return $this->model->getKeyName();
     }
 }

@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             CategorySeeder::class,
             EquipmentSeeder::class,
-            BookingSeeder::class,
+            // BookingSeeder::class,
             PermissionSeeder::class,
             RolesPermissionsSeeder::class,
         ]);

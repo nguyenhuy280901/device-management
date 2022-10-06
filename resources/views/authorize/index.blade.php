@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') Authorization @endsection
+@section('title') Authorize @endsection
 
 @section('page-css')
     <link rel="stylesheet" href="vendor/choices.js/choices.min.css">
@@ -34,7 +34,7 @@
             <div class="col-12 col-md-9">
                 <strong>Permissions</strong>
                 <div class="wrapper border border-success rounded p-4">
-                    <div class="d-flex flex-column flex-wrap justify-content-between" style="max-height: 300px;">
+                    <div class="d-flex flex-column flex-wrap justify-content-between" style="max-height: 280px;">
                         @foreach ($permissions as $permission)
                             <div class="form-check">
                                 <div class="custom-control custom-checkbox">
@@ -47,6 +47,7 @@
                         @endforeach
                     </div>
                     <div class="action pt-3 d-flex justify-content-end">
+                        <button id="reset" class="btn btn-secondary me-2" disabled>Clear All</button>
                         <button id="update-permissions" class="btn btn-info" disabled>Update Permissions</button>
                     </div>
                 </div>

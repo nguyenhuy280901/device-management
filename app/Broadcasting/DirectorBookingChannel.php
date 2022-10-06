@@ -20,7 +20,7 @@ class DirectorBookingChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\Models\Employee  $user
+     * @param \App\Models\Employee $user
      * @return array|bool
      */
     public function join(Employee $user)

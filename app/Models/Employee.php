@@ -61,16 +61,6 @@ class Employee extends Authenticatable
         return $this->hasMany(Booking::class, 'employee_id');
     }
 
-     /**
-	 * 
-     * 
-	 * @return \Illuminate\Database\Eloquent\Collection
-	 */
-	public function permissions()
-	{
-		return $this->role->permissions();
-	}
-
     /**
 	 * Check if employee has permission
 	 * 
@@ -79,6 +69,6 @@ class Employee extends Authenticatable
 	 */
     public function hasPermission($permission)
 	{
-        return $this->permissions()->pluck('slug')->contains($permission);
+        return $this->role->permissions->pluck('slug')->contains($permission);
     }
 }

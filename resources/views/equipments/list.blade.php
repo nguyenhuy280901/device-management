@@ -26,19 +26,7 @@
                     </span>
                 </td>
                 <td>
-                    <a href="{{ route('equipment.show', ['equipment' => $equipment->id]) }}" class="btn btn-success d-block">
-                        <i class="fa-regular fa-eye"></i>
-                    </a>
-                    <a href="{{ route('equipment.edit', ['equipment' => $equipment->id]) }}" class="btn btn-warning d-block">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    <form action="{{ route('equipment.destroy', ['equipment' => $equipment->id]) }}" method="POST" class="w-100" onsubmit="return confirm('Do you want to delete device \'{{ $equipment->name }}?\'')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger w-100">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </form>
+                    @include('equipments.action')
                 </td>
             </tr>
         @endforeach

@@ -11,6 +11,7 @@ enum BookingStatus: int
     case ALLOCATED = 5;
     case RETURNED = 6;
     case OUTOFDATE = 7;
+    case CANCEL = 8;
 
     public static function values(): array
     {
@@ -28,6 +29,7 @@ enum BookingStatus: int
             BookingStatus::ALLOCATED => 'Allocated',
             BookingStatus::RETURNED => 'Returned',
             BookingStatus::OUTOFDATE => 'Out of date',
+            BookingStatus::OUTOFDATE => 'Cancel',
         };
     }
 
@@ -42,6 +44,7 @@ enum BookingStatus: int
             BookingStatus::ALLOCATED => 'info',
             BookingStatus::RETURNED => 'warning',
             BookingStatus::OUTOFDATE => 'danger',
+            BookingStatus::CANCEL => 'danger',
         };
     }
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('equipment_id');
             $table->text('content')->nullable();
             $table->timestamp('booking_date')->useCurrent();
-            $table->timestamp('alocated_date')->nullable();
+            $table->timestamp('allocated_date')->nullable();
             $table->timestamp('return_intented_date')->nullable();
             $table->timestamp('return_actual_date')->nullable();
             $table->enum('status', BookingStatus::values());

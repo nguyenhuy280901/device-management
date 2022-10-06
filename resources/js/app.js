@@ -16,18 +16,23 @@ const showToast = (message, style = {}, callback = function(){}) => {
 
 window.showToast = showToast;
 
-window.Echo.private(`booking-manager.${window.User.departmentId}`)
+window.Echo.private(`booking-director`)
 .listen('CreateBookingEvent', (e) => {
-    const { booking, employee } = e;
-    const message = `Employee ${employee.fullname} had just booked a device!`;
+    const { booking } = e;
+    const message = `Employee ${booking.employee.fullname} had just booked a device!`;
 
-    showToast(message, { background: '#319DA0' }, function() {
-        window.location.href = `${document.location.origin}/booking/${booking.id}`;
+    showToast(message, { background: '#ff0000' }, function() {
+        window.location.href = `${document.location.origin}/booking/all-booking/${booking.id}`;
     });
 });
 
-window.Echo.private(`booking-director`)
-.listen('SendBookingToDirector', (e) => {
+window.Echo.private(`booking-manager.${window.User.departmentId}`)
+.listen('CreateBookingEvent', (e) => {
     const { booking } = e;
-    // showToast(booking);
+    const message = `Employee ${booking.employee.fullname} had just booked a device!`;
+
+    showToast(message, { background: '#319DA0' }, function() {
+        window.location.href = `${document.location.origin}/booking/department-booking/${booking.id}`;
+    });
 });
+

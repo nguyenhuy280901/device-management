@@ -5,9 +5,10 @@ namespace App\Enumerations;
 enum EquipmentStatus: int
 {
     case AVAILABLE = 1;
-    case ALLOCATED = 2;
-    case REPAIRING = 3;
-    case DAMAGED = 4;
+    case UNAVAILABLE = 2;
+    case ALLOCATED = 3;
+    case REPAIRING = 4;
+    case DAMAGED = 5;
 
     public static function values(): array
     {
@@ -19,6 +20,7 @@ enum EquipmentStatus: int
         return match($this) 
         {
             EquipmentStatus::AVAILABLE => 'Available',
+            EquipmentStatus::UNAVAILABLE => 'Unavailable',
             EquipmentStatus::ALLOCATED => 'Allocated',
             EquipmentStatus::REPAIRING => 'Repairing',
             EquipmentStatus::DAMAGED => 'Damaged',
@@ -30,6 +32,7 @@ enum EquipmentStatus: int
         return match($this) 
         {
             EquipmentStatus::AVAILABLE => 'success',
+            EquipmentStatus::UNAVAILABLE => 'secondary',
             EquipmentStatus::ALLOCATED => 'primary',
             EquipmentStatus::REPAIRING => 'warning',
             EquipmentStatus::DAMAGED => 'danger',

@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Equipment;
 
 use App\Enumerations\ApproveLevel;
 use App\Enumerations\EquipmentStatus;
-use App\Events\CreateBookingEvent;
+use App\Http\Controllers\Controller;
 use App\Services\EquipmentService;
 use App\Services\CategoryService;
 use App\Http\Requests\EquipmentRequest;
 use App\Services\UploadService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 
 class EquipmentController extends Controller
@@ -45,23 +46,14 @@ class EquipmentController extends Controller
         UploadService $uploadService
     )
     {
+        // Authorize
+        $this->middleware('can:create-device')->only('create', 'store');
+        $this->middleware('can:update-device')->only('edit', 'update');
+        $this->middleware('can:delete-device')->only('destroy');
+
         $this->equipmentService = $equipmentService;
         $this->categoryService = $categoryService;
         $this->uploadService = $uploadService;
-    }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $equipments = $this->equipmentService->getWithRelations('category');
-        
-        return view('equipments.index', [
-            'equipments' => $equipments,
-        ]);
     }
 
     /**
@@ -99,38 +91,30 @@ class EquipmentController extends Controller
 
             $this->uploadService->store("images/equipments", $file);
 
-            return to_route('equipment.index')->with([
+            if(Gate::allows('view-all-device'))
+            {
+                $redirectRoute =  'all-equipment.index';
+            }
+            else if(Gate::allows('view-department-device'))
+            {
+                $redirectRoute =  'department-equipment.index';
+            }
+            else
+            {
+                $redirectRoute =  'my-equipment.index';
+            }
+
+            return to_route($redirectRoute)->with([
                 'message' => 'Create new device successfully'
             ]);
         }
         catch(ValidationException $ex)
         {
+            $file = $this->uploadService->decodeImageBase64(request('image_json'));
             return back()->withErrors([
                 'message' => $ex->getMessage()
             ])->withInput();
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        try
-        {
-            $equipment = $this->equipmentService->find($id);
-        }
-        catch (ModelNotFoundException $ex)
-        {
-            return to_route('equipment.index')->withErrors(['message' => 'Not found device!']);
-        }
-
-        return view('equipments.detail', [
-            'equipment' => $equipment
-        ]);
     }
 
     /**
@@ -145,7 +129,7 @@ class EquipmentController extends Controller
         {
             $equipment = $this->equipmentService->find($id);
         }
-        catch (ModelNotFoundException $ex)
+        catch (ModelNotFoundException)
         {
             return to_route('equipment.index')->withErrors(['message' => 'Not found device!']);
         }
@@ -185,7 +169,20 @@ class EquipmentController extends Controller
             
             $this->equipmentService->update($id, $validated);
 
-            return to_route('equipment.index')->with([
+            if(Gate::allows('view-all-device'))
+            {
+                $redirectRoute =  'all-equipment.index';
+            }
+            else if(Gate::allows('view-department-device'))
+            {
+                $redirectRoute =  'department-equipment.index';
+            }
+            else
+            {
+                $redirectRoute =  'my-equipment.index';
+            }
+
+            return to_route($redirectRoute)->with([
                 'message' => "Update device '$request->name' successfully"
             ]);
         }
@@ -195,9 +192,9 @@ class EquipmentController extends Controller
                 'message' => $ex->getMessage()
             ])->withInput();
         }
-        catch (ModelNotFoundException $ex)
+        catch (ModelNotFoundException)
         {
-            return to_route('equipment.index')->withErrors(['message' => 'Not found device!']);
+            return back()->withErrors(['message' => 'Not found device!']);
         }
     }
 
@@ -218,7 +215,20 @@ class EquipmentController extends Controller
             return to_route('equipment.index')->withErrors(['message' => 'Can not delete device!']);
         }
 
-        return to_route('equipment.index')->with([
+        if(Gate::allows('view-all-device'))
+        {
+            $redirectRoute =  'all-equipment.index';
+        }
+        else if(Gate::allows('view-department-device'))
+        {
+            $redirectRoute =  'department-equipment.index';
+        }
+        else
+        {
+            $redirectRoute =  'my-equipment.index';
+        }
+
+        return to_route($redirectRoute)->with([
             'message' => "Delete device successfully"
         ]);
     }

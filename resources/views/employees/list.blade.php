@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body px-3 py-2">
                     <h4 class="card-title">
-                        <a href="{{ route('employee.show', ['employee' => $employee->id]) }}">{{ $employee->fullname }}</a>
+                        {{ $employee->fullname }}
                     </h4>
                     <div class="field">
                         <strong>Email: </strong>
@@ -22,12 +22,7 @@
                 </div>
             </div>
             <div class="card-footer py-2 d-flex justify-content-end">
-                <a href="{{ route('employee.show', ['employee' => $employee->id]) }}" class="card-link">
-                    <i class="fa-solid fa-eye"></i>
-                </a>
-                <a href="{{ route('employee.edit', ['employee' => $employee->id]) }}" class="card-link">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </a>
+                @include('employees.action')
             </div>
         </div>
     </div>

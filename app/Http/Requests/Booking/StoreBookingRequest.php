@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Booking;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -28,7 +28,7 @@ class StoreBookingRequest extends FormRequest
         return [
             'equipment_id' => 'required|exists:equipments,id',
             'content' => 'required|max:255',
-            'return_intented_date' => 'required'
+            'return_intented_date' => 'required|after:now'
         ];
     }
 
@@ -44,6 +44,7 @@ class StoreBookingRequest extends FormRequest
             'content.required' => 'Please types the content of your booking',
             'content.max' => 'The booking\'s content is too long. Please truncates booking\'s content!',
             'return_intented_date.required' => 'Please choose equipment intented return date',
+            'return_intented_date.after' => 'Intented return date must be after today',
         ];
     }
 

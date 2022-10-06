@@ -20,7 +20,7 @@ class ManagerBookingChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param  \App\Models\Employee  $user
+     * @param \App\Models\Employee $user
      * @param  $department_id
      * @return array|bool
      */

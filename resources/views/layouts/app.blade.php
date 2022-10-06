@@ -15,7 +15,7 @@
     <base href="{{ asset('') }}"/>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
-    @vite('resources/sass/app.scss')
+    @vite('resources/sass/app.scss', 'build')
 
     <!-- Page CSS -->
     @yield('page-css')
@@ -68,8 +68,8 @@
     <script src="vendor/js/jquery-3.6.1.min.js"></script>
     <script src="vendor/js/popper.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    {{-- @vite('resources/js/app.js', 'build') --}}
-    @vite('resources/js/app.js')
+    @vite('resources/js/app.js', 'build')
+    {{-- @vite('resources/js/app.js') --}}
     
     <!-- Page JS -->
     @yield('page-js')
