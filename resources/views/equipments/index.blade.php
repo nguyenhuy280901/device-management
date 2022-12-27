@@ -26,7 +26,12 @@
     <section class="section">
         <div class="card">
             <div class="card-body">
-                @include('equipments.list')
+                @empty($details)
+                    @include('equipments.list')
+                @else
+                    @include('equipments.list-details')
+                @endempty
+                
             </div>
         </div>
     </section>

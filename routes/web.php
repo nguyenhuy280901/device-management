@@ -48,4 +48,8 @@ Route::middleware('auth')->group(function() {
 
     Route::resource('my-information', \App\Http\Controllers\AccountController::class)->only('index');
     Route::resource('change-password', \App\Http\Controllers\Auth\ChangePasswordController::class)->only('index', 'update');
+    
+    Route::resource('backup', \App\Http\Controllers\BackupController::class);
+    Route::resource('equipment-json', \App\Http\Controllers\Equipment\EquipmentJsonController::class);
+
 });

@@ -194,6 +194,14 @@
                 @can('authorize')
                     <li @class(['sidebar-item', 'active' => request()->is('authorize')])>
                         <a href="{{ route('authorize.index') }}" class='sidebar-link'>
+                            <span>View Report</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('authorize')
+                    <li @class(['sidebar-item', 'active' => request()->is('authorize')])>
+                        <a href="{{ route('authorize.index') }}" class='sidebar-link'>
                             <span>Authorize</span>
                         </a>
                     </li>

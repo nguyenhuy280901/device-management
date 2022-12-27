@@ -62,11 +62,11 @@ class RecoverController extends Controller
         $booking->status = BookingStatus::RETURNED;
         $booking->return_actual_date = new DateTime();
 
-        $equipment = $booking->equipment;
-        $equipment->status = EquipmentStatus::AVAILABLE;
+        // $equipment = $booking->equipment;
+        // $equipment->status = EquipmentStatus::AVAILABLE;
 
         $booking->update();
-        $equipment->update();
+        // $equipment->update();
 
         return back()->with([
             'message' => "Device has been recovered!"

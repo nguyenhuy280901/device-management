@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|unique|max:255',
             'description' => 'required|max:255'
         ];
     }
@@ -39,6 +39,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'Please types category\'s name',
+            'name.unique' => 'The category has already exist. Please type the difference category!',
             'name.max' => 'The category\'s name is too long. Please truncates your category\'s name!',
             'description.required' => 'Please types category\'s description',
             'description.max' => 'The category\'s description is too long. Please truncates your category\'s description!',

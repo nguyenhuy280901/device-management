@@ -52,7 +52,9 @@ class PermissionSeeder extends Seeder
             ['id' => 27, "name" => "Approve booking manager level", "slug" => "approve-booking-manager"],
             ['id' => 28, "name" => "Approve booking director level", "slug" => "approve-booking-director"],
 
-            ['id' => 29, "name" => "Authorize", "slug" => "authorize"]
+            ['id' => 29, "name" => "Authorize", "slug" => "authorize"],
+            ['id' => 30, "name" => "Backup database", "slug" => "backup"],
+            ['id' => 31, "name" => "Restore database", "slug" => "restore"],
         ];
 
         DB::table('permissions')->insert($permissions);

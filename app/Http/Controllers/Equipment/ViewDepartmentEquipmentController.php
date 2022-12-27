@@ -50,18 +50,21 @@ class ViewDepartmentEquipmentController extends Controller
         ];
 
         $options = [
-            'relations' => ['equipment', 'equipment.category']
+            'relations' => ['details', 'details.equipment', 'details.equipment.category']
         ];
 
         $bookings = $this->bookingService->getBy($conditions, $options);
-        $equipments = collect();
+        $details = collect();
         foreach($bookings as $booking)
         {
-            $equipments->add($booking->equipment);
+            foreach($booking->details as $item)
+            {
+                $details->add($item);
+            }
         }
         
         return view('equipments.index', [
-            'equipments' => $equipments,
+            'details' => $details,
             'title' => 'Department devices'
         ]);
     }
@@ -93,7 +96,7 @@ class ViewDepartmentEquipmentController extends Controller
             ];
 
             $options = [
-                'relations' => ['equipment', 'equipment.category']
+                'relations' => ['details', 'details.equipment', 'details.equipment.category']
             ];
 
             $bookings = $this->bookingService->getBy($conditions, $options);

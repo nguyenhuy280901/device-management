@@ -52,27 +52,27 @@ class ApproveBookingManagerController extends Controller
                 $booking->status = BookingStatus::APPROVED;
                 $booking->update();
 
-                // Update status of equipment
-                $equipment = $booking->equipment;
-                $equipment->status = EquipmentStatus::UNAVAILABLE;
-                $equipment->update();
+                // // Update status of equipment
+                // $equipment = $booking->equipment;
+                // $equipment->status = EquipmentStatus::UNAVAILABLE;
+                // $equipment->update();
 
-                // Disable other bookings of this equipment
-                $otherBookings = $this->bookingService->getBy([
-                    [
-                        'column' => 'equipment_id',
-                        'value' => $equipment->id
-                    ],
-                    [
-                        'column' => 'id',
-                        'operator' => '<>',
-                        'value' => $booking->id
-                    ]
-                ], ["columns" => "id"]);
+                // // Disable other bookings of this equipment
+                // $otherBookings = $this->bookingService->getBy([
+                //     [
+                //         'column' => 'equipment_id',
+                //         'value' => $equipment->id
+                //     ],
+                //     [
+                //         'column' => 'id',
+                //         'operator' => '<>',
+                //         'value' => $booking->id
+                //     ]
+                // ], ["columns" => "id"]);
 
-                $this->bookingService->update($otherBookings->toArray(), [
-                    'status' => BookingStatus::DISAPPROVED
-                ]);
+                // $this->bookingService->update($otherBookings->toArray(), [
+                //     'status' => BookingStatus::DISAPPROVED
+                // ]);
 
                 $message = 'Booking has been approved!';
             }

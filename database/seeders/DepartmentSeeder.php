@@ -29,6 +29,18 @@ class DepartmentSeeder extends Seeder
                 'description' => 'Board of manager'
             ],
             [
+                'name' => 'Finance',
+                'description' => 'Finance and accounting'
+            ],
+            [
+                'name' => 'Sale & Marketing',
+                'description' => 'Sale & Marketing'
+            ],
+            [
+                'name' => 'Device Management',
+                'description' => 'Device Management'
+            ],
+            [
                 'name' => 'Orther',
                 'description' => ''
             ],

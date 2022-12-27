@@ -5,8 +5,6 @@
             @empty($employee)
                 <th>Employee Request</th>
             @endempty
-            <th>Equipment Name</th>
-            <th>Image</th>
             <th>Status</th>
             <th>Booking Date</th>
             <th>Content</th>
@@ -19,12 +17,6 @@
                 <td>{{ $loop->index + 1 }}</td>
                 <td>
                     {{  $booking->employee->fullname }}
-                </td>
-                <td>
-                    {{ $booking->equipment->name }}
-                </td>
-                <td>
-                    <img style="width: 140px; height: 100px;" src="images/equipments/{{ $booking->equipment->image }}" alt="{{ $booking->equipment->name }}">
                 </td>
                 <td>
                     <span class="badge bg-{{  $booking->status->color() }}">

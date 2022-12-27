@@ -13,7 +13,7 @@ class Booking extends Model
     
     public $timestamps = false;
     protected $fillable = [
-        'equipment_id', 'employee_id', 'content', 'booking_date', 'status',
+        'employee_id', 'content', 'booking_date', 'status',
         'alocated_date', 'return_intented_date', 'return_actual_date',
     ];
 
@@ -33,11 +33,11 @@ class Booking extends Model
     }
 
     /**
-     * Get the employee that the booking belongs to.
+     * 
      */
-    public function equipment()
+    public function details()
     {
-        return $this->belongsTo(Equipment::class, 'equipment_id');
+        return $this->hasMany(BookingDetail::class, 'booking_id');
     }
 
     /**

@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
         // Barryvdh\Debugbar\ServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
 
         /*
          * Application Service Providers...

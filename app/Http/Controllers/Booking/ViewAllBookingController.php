@@ -37,7 +37,7 @@ class ViewAllBookingController extends Controller
     {
         $conditions = array();
         $options = [
-            "relations" => ['employee', 'equipment']
+            "relations" => ['employee', 'details', 'details.equipment']
         ];
 
         $bookings = $this->bookingService->getBy($conditions, $options);

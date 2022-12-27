@@ -12,6 +12,7 @@ use App\Services\BookingService;
 use App\Services\EquipmentService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class BookDeviceController extends Controller
@@ -72,24 +73,46 @@ class BookDeviceController extends Controller
     {
         try
         {
+            // dd(request()->all());
+            DB::beginTransaction();
+
+
             $validated = $request->validated();
 
-            $equipment = $this->equipmentService->find($request->equipment_id);
-            if($equipment->approve_level == ApproveLevel::MANAGER)
-            {
-                $status = BookingStatus::PENDINGMANAGER;
-            }
-            else
-            {
-                $status = BookingStatus::PENDINGDIRECTOR;
+            $equipments = $this->equipmentService->getBy([
+                [
+                    "column" => "id",
+                    "value" => request("equipment_id")
+                ]
+            ]);
+
+            $status = BookingStatus::PENDINGMANAGER;
+            foreach($equipments as $equipment) {
+                if($equipment->approve_level == ApproveLevel::DIRECTOR)
+                {
+                    $status = BookingStatus::PENDINGDIRECTOR;
+                    break;
+                }
             }
 
-            $booking = $this->bookingService->create(array_merge($validated, [
+            $bookingID = DB::table('bookings')->insertGetId(array_merge($validated, [
                 "employee_id" => Auth::id(),
                 "status" => $status
             ]));
 
+            $booking = $this->bookingService->find($bookingID);
+            $quantities = request("quantity");
+
+            foreach(request("equipment_id") as $key => $equipment_id) {
+                DB::table('booking_details')->insert([
+                    "booking_id" => $bookingID,
+                    "equipment_id" => $equipment_id,
+                    "quantity" => $quantities[$key]
+                ]);
+            }
+
             CreateBookingEvent::dispatch($booking);
+            DB::commit();
 
             return to_route('my-booking.show', ['my_booking' => $booking->id])->with([
                 'message' => 'Book device successfully!'
@@ -97,12 +120,14 @@ class BookDeviceController extends Controller
         }
         catch(ValidationException $ex)
         {
+            DB::rollBack();
             return back()->withErrors([
                 'message' => $ex->getMessage()
             ])->withInput();
         }
         catch(ModelNotFoundException)
         {
+            DB::rollBack();
             return back()->withErrors(['message' => 'Not found equipment!']);
         }
     }

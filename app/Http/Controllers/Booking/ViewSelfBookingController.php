@@ -41,7 +41,7 @@ class ViewSelfBookingController extends Controller
         ];
 
         $options = [
-            "relations" => ['employee', 'equipment']
+            "relations" => ['employee', 'details', 'details.equipment']
         ];
 
         $bookings = $this->bookingService->getBy($conditions, $options);

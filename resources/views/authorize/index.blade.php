@@ -34,7 +34,7 @@
             <div class="col-12 col-md-9">
                 <strong>Permissions</strong>
                 <div class="wrapper border border-success rounded p-4">
-                    <div class="d-flex flex-column flex-wrap justify-content-between" style="max-height: 280px;">
+                    <div class="d-flex flex-column flex-wrap justify-content-between" style="max-height: 290px;">
                         @foreach ($permissions as $permission)
                             <div class="form-check">
                                 <div class="custom-control custom-checkbox">

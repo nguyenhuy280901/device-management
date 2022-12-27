@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employee_id');
-            $table->unsignedBigInteger('equipment_id');
             $table->text('content')->nullable();
             $table->timestamp('booking_date')->useCurrent();
             $table->timestamp('allocated_date')->nullable();

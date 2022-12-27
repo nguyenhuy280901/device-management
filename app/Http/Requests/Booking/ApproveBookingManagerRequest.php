@@ -21,11 +21,20 @@ class ApproveBookingManagerRequest extends FormRequest
     public function authorize()
     {
         $booking = Booking::find($this->approve_booking_manager);
-        $equipment = $booking->equipment;
+        $checkLevel = true;
+
+        foreach($booking->details as $item)
+        {
+            if($item->equipment->approve_level == ApproveLevel::DIRECTOR)
+            {
+                $checkLevel = false;
+                break;
+            }
+        }
+        
         $employee = $booking->employee;
 
-        return $equipment->approve_level == ApproveLevel::MANAGER &&
-                Auth::user()->department_id == $employee->department_id;
+        return $checkLevel && Auth::user()->department_id == $employee->department_id;
     }
 
     /**

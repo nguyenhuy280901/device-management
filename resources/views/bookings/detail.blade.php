@@ -29,34 +29,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="wrapper">
-                    <strong>Equipment Information</strong>
-                    <div class="row border border-success p-2">
-                        <div class="col-md-4 col-6">
-                            <div class="image-wrapper">
-                                <img src="images/equipments/{{ $booking->equipment->image }}" alt="{{ $booking->equipment->name }}" class="w-100">
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-8 col-6">
-                            <div class="field">
-                                <strong>Name: </strong>
-                                {{ $booking->equipment->name }}
-                            </div>
-                            <div class="field">
-                                <strong>Category: </strong>
-                                {{ $booking->equipment->category->name }}
-                            </div>
-                            <div class="field">
-                                <strong>Status: </strong>
-                                <span class="badge bg-{{  $booking->equipment->status->color() }}">
-                                    {{ $booking->equipment->status->description() }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="wrapper">
@@ -89,12 +61,57 @@
                             {{ $booking->return_actual_date ?? 'None' }}
                         </div>
                     </div>
-                </div>
 
-                <div class="wrapper">
-                    <strong>Action</strong>
-                    <div class="border border-danger p-2">
-                        @include('bookings.actions.action')
+                    <div class="wrapper">
+                        <strong>Action</strong>
+                        <div class="border border-danger p-2">
+                            @include('bookings.actions.action')
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 px-0 mt-4    ">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h4>Equipment Information</h4>
+                        </div>
+                        <div class="cart-body">
+                            
+                            <table class="table table-striped" id="table-detail" style="min-height: 270px;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Quantity</th>
+                                        <th>Category</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    @foreach ($booking->details as $item)
+                                        @php
+                                            $equipment = $item->equipment;
+                                        @endphp
+                                        <tr>
+                                            <th>{{ $loop->index + 1 }}</th>
+                                            <th>{{ $equipment->name }}</th>
+                                            <th style="width: 120px;">
+                                                <img class="w-100" src="{{ asset('') }}images/equipments/{{ $equipment->image }}" alt="{{ $equipment->name }}">
+                                            </th>
+                                            <th>{{ $item->quantity }}</th>
+                                            <th>{{ $equipment->category->name }}</th>
+                                            <th>
+                                                <span class="badge bg-{{  $equipment->status->color() }}">
+                                                    {{ $equipment->status->description() }}
+                                                </span>
+                                            </th>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

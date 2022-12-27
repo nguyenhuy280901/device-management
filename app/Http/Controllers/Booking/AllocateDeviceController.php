@@ -47,11 +47,11 @@ class AllocateDeviceController extends Controller
             $booking->status = BookingStatus::ALLOCATED;
             $booking->allocated_date = new DateTime();
 
-            $equipment = $booking->equipment;
-            $equipment->status = EquipmentStatus::ALLOCATED;
+            // $equipment = $booking->equipment;
+            // $equipment->status = EquipmentStatus::ALLOCATED;
 
             $booking->update();
-            $equipment->update();
+            // $equipment->update();
 
             return back()->with([
                 'message' => "Device has been allocated!"
